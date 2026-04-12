@@ -1,0 +1,91 @@
+Chapter 10: Polymorphism & Abstraction 
+
+1. Tính Đa hình (Polymorphism) - "Một tên gọi, nhiều cách chạy"
+Khái niệm:
+Đa hình cho phép các lớp con khác nhau thực hiện cùng một phương thức theo những cách khác nhau.
+Ví dụ thực tế: Cùng là hành động "Mở trình duyệt", nhưng Chrome sẽ mở khác, Safari sẽ mở khác.
+Ứng dụng trong Automation:
+Giả sử bạn có nhiều loại Element (Button, Checkbox, Dropdown). Tất cả đều có hàm click(), nhưng cách click hoặc log ra màn hình sẽ khác nhau.
+class UIElement {
+    click() {
+        console.log("Clicking on a generic element");
+    }
+}
+
+class Button extends UIElement {
+    click() {
+        console.log("Clicking on a BUTTON with ripple effect");
+    }
+}
+
+class Checkbox extends UIElement {
+    click() {
+        console.log("Clicking on a CHECKBOX to toggle state");
+    }
+}
+
+// Hàm dùng chung cho mọi loại Element
+function performClick(element) {
+    element.click(); // Nó sẽ tự biết gọi hàm của Button hay Checkbox tùy vào đối tượng truyền vào
+}
+
+const myBtn = new Button();
+const myChk = new Checkbox();
+
+performClick(myBtn); // Output: Clicking on a BUTTON...
+performClick(myChk); // Output: Clicking on a CHECKBOX...
+
+
+
+2. Tính Trừu tượng (Abstraction) - "Biết cái gì, không cần biết thế nào"
+Khái niệm:
+Trừu tượng là việc ẩn đi những chi tiết cài đặt phức tạp và chỉ đưa ra những tính năng cần thiết cho người dùng.
+Ví dụ thực tế: Khi lái xe, bạn chỉ cần biết đạp ga là xe chạy, đạp phanh là dừng. Bạn không cần biết piston hay hệ thống thủy lực bên trong hoạt động ra sao.
+Ứng dụng trong Automation:
+Người viết Test Script chỉ cần gọi hàm login(). Họ không cần quan tâm bên trong hàm đó dùng querySelector hay xpath, hay đợi bao nhiêu giây.
+class LoginManager {
+    #validateEmail(email) { // Hàm nội bộ, ẩn đi (Abstraction)
+        return email.includes("@");
+    }
+
+    async login(email, password) {
+        if (!this.#validateEmail(email)) {
+            throw new Error("Email không hợp lệ!");
+        }
+        // Các bước phức tạp bên dưới được ẩn đi
+        console.log("Step 1: Navigate to URL");
+        console.log("Step 2: Input credentials");
+        console.log("Step 3: Click Submit");
+        console.log("✅ Login successful");
+    }
+}
+
+const auth = new LoginManager();
+auth.login("admin@test.com", "123"); // Người dùng chỉ thấy hàm login() đơn giản
+
+
+
+III. Bảng tổng kết 4 tính chất OOP
+
+Tính chất
+Ý nghĩa ngắn gọn
+Ví dụ Automation
+Đóng gói
+(encapsulation)
+Giữ bí mật bên trong (#private)
+Giấu các Selector phức tạp, chỉ show hàm hành động.
+Kế thừa
+(inheritance)
+Dùng lại code của "cha" (extends)
+LoginPage kế thừa BasePage để dùng chung hàm open().
+Đa hình
+(polymorphism)
+Một hàm, nhiều cách thực thi
+Hàm click() chạy khác nhau trên Button, Checkbox, Link.
+Trừu tượng
+(abtraction)
+Ẩn chi tiết khó, hiện tính năng dễ
+Tạo hàm makeOrder() ẩn đi 10 bước Click/Input bên trong.
+
+
+Kết luận: OOP không phải là làm cho code chạy nhanh hơn, mà làm cho code DỄ ĐỌC và DỄ SỬA hơn.

@@ -1,0 +1,112 @@
+Chapter 3: TƯ DUY RA QUYẾT ĐỊNH (CONTROL FLOW)
+Trong Automation, đây là phần quan trọng nhất để xử lý các tình huống thực tế VD: Nếu thấy quảng cáo thì tắt đi, nếu đăng nhập sai thì kiểm tra thông báo lỗi.
+
+I. Câu lệnh If...Else
+Đây là cấu trúc dùng nhiều nhất trong Testing để thực hiện các bước kiểm tra (Assertion).
+1. Cú pháp cơ bản
+if (điều kiện) {
+    // Hành động nếu ĐÚNG
+} else {
+    // Hành động nếu SAI
+}
+
+
+
+2. Ví dụ thực tế cho Tester
+Giả sử bạn đang test tính năng phân quyền:
+const userRole = "admin";
+if (userRole === "admin") {
+    console.log("Hiển thị nút 'Xóa bài viết'");
+} else {
+    console.log("Ẩn nút 'Xóa bài viết'");
+}
+
+
+
+
+II. So sánh và Logic (Các phép toán "soi" dữ liệu)
+Để viết được điều kiện trong if, Tester cần nắm vững các toán tử:
+
+
+So sánh:
+===, == (Bằng tuyệt đối - Khuyên dùng)
+!== (Khác/Không bằng)
+>, <, >=, <= (So sánh lớn bé - dùng cho giá tiền, số lượng sản phẩm).
+Logic (Kết hợp nhiều điều kiện):
+&& (VÀ): Tất cả phải đúng.
+|| (HOẶC): Chỉ cần một cái đúng.
+! (PHỦ ĐỊNH): Đảo ngược trạng thái (Đang hiện -> Thành ẩn).
+Ví dụ ứng dụng: if (status === "Success" && code === 200) -> Test Case Pass!
+
+
+Warning!!! Phân biệt “==” và “===”
+Trong Javascript, có hai cách để so sánh bằng. Tester bắt buộc phải phân biệt được chúng để tránh lỗi logic khi so sánh dữ liệu từ API hoặc UI.
+1. Toán tử == (Loose Equality - So sánh tương đối)
+Cách hoạt động: Nó sẽ cố gắng ép kiểu (convert) hai giá trị về cùng một kiểu rồi mới so sánh.
+Ví dụ: 1 == "1" -> Kết quả là true. (Javascript tự biến chuỗi "1" thành số 1).
+2. Toán tử === (Strict Equality - So sánh tuyệt đối)
+Cách hoạt động: So sánh cả Giá trị và Kiểu dữ liệu. Không có sự ép kiểu ở đây.
+Ví dụ: 1 === "1" -> Kết quả là false. (Vì một bên là Số, một bên là Chuỗi).
+
+=> Luôn luôn sử dụng Strict Equality. 
+Ex: Giả sử bạn lấy giá tiền từ một Web Element, nó thường là chuỗi "100". Nếu bạn so sánh với số 100 bằng ==, nó sẽ báo Pass, nhưng thực tế kiểu dữ liệu đang bị sai (String vs Number), điều này có thể gây lỗi tính toán ở các bước sau.
+
+
+Phép so sánh
+Kết quả ==
+Kết quả ===
+Giải thích cho Tester
+10 == "10"
+true
+false
+=== yêu cầu khớp cả kiểu dữ liệu
+true == 1
+true
+false
+== coi true là 1, === thì không
+null == undefined
+true
+false
+Hai trạng thái "trống" khác nhau hoàn toàn
+
+
+Bài Tập: Đoán kết quả
+console.log(10 !== "10");
+console.log( (5 > 3) && (2 === "2") );
+console.log( (100 >= 100) || (1 === 2) );
+let isVisible = true; 
+console.log(!isVisible);
+Câu hỏi tình huống: Bạn lấy được số lượng sản phẩm từ Website là chuỗi "5". Bạn muốn kiểm tra xem nó có lớn hơn 0 hay không. Bạn nên dùng cách nào an toàn nhất? (Gợi ý: Ép kiểu về Number trước khi so sánh === hay cứ dùng > 0?)
+
+
+
+
+
+III. Switch...Case (Lựa chọn nhiều nhánh)
+Dùng khi bạn có một biến nhưng có rất nhiều giá trị có thể xảy ra (như chọn Môi trường test hoặc chọn Browser).
+Ví dụ chọn Browser để chạy Automation:
+const browser = "chrome";
+
+switch (browser) {
+    case "chrome":
+        console.log("Khởi chạy Google Chrome...");
+        break;
+    case "firefox":
+        console.log("Khởi chạy Firefox...");
+        break;
+    case "safari":
+        console.log("Khởi chạy Safari...");
+        break;
+    default:
+        console.log("Trình duyệt không hỗ trợ, mặc định chạy Edge.");
+}
+
+
+IV. Bài tập thực hành (Coding Challenge)
+Bài 1: Kiểm tra kết quả Test Khai báo biến actualResult = "Login Success" và expectedResult = "Login Success". Hãy dùng if...else để in ra "PASSED" nếu hai biến bằng nhau, ngược lại in ra "FAILED".
+Bài 2: Phân loại mức độ lỗi (Bug Severity) Cho một biến bugPriority có giá trị từ 1 đến 3.
+Nếu là 1: In ra "Blocker - Sửa ngay!".
+Nếu là 2: In ra "High - Cần sửa trong sprint".
+Nếu là 3: In ra "Low - Sửa sau". (Gợi ý: Dùng if...else if...else hoặc switch...case).
+Bài 3: Kiểm tra điều kiện Coupon Một mã giảm giá chỉ áp dụng nếu: totalBill > 500 VÀ isMember === true. Hãy viết code để kiểm tra xem khách hàng có được giảm giá không.
+

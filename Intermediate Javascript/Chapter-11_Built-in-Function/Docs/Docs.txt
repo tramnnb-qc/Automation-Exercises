@@ -1,0 +1,325 @@
+Chapter 11: Advanced array and object
+
+## 1. CÁC HÀM BUILT-IN CỦA ARRAY (MẢNG)
+
+### 1.1 Nhóm Biến đổi và Duyệt mảng
+
+    .map(): Duyệt qua mảng và trả về một mảng mới có cùng số lượng phần tử nhưng giá trị đã thay đổi.
+    - Ví dụ:
+    const prices = [100, 200, 300];
+    // Chuyển đổi giá tiền sang định dạng có thêm ký hiệu $
+    const formattedPrices = prices.map(price => `$${price}`);
+    console.log(formattedPrices); // ["$100", "$200", "$300"]
+
+
+    .filter(): Trả về một mảng mới chỉ chứa các phần tử thỏa mãn điều kiện.
+    - Ví dụ:
+    const scores = [4, 8, 5, 9, 3];
+    // Lọc ra các điểm số đạt (từ 5 trở lên)
+    const passedScores = scores.filter(score => score >= 5);
+    console.log(passedScores); // [8, 5, 9]
+
+
+    .forEach(): Thực hiện một hành động lên từng phần tử (không trả về mảng mới).
+    - Ví dụ:
+    const buttons = ["Login", "Signup", "Reset"];
+    // Giả lập hành động click vào từng button
+    buttons.forEach(btn => console.log(`Clicking on ${btn} button...`));
+
+### 1.2 Nhóm Tìm kiếm và Kiểm tra
+
+    .find(): Trả về giá trị của phần tử đầu tiên tìm thấy.
+    - Ví dụ:
+    const users = [{id: 1, name: "An"}, {id: 2, name: "Bình"}, {id: 2, name: "Đạt"}];
+    const user = users.find(u => u.id === 2);
+    console.log(user.name); // "Bình"
+
+
+    .includes(): Kiểm tra mảng có chứa giá trị đó hay không (trả về true/false).
+    - Ví dụ:
+    const activeTags = ["urgent", "low-priority", "new"];
+    const isUrgent = activeTags.includes("urgent");
+    console.log(isUrgent); // true
+
+
+    .every() & .some(): Kiểm tra "tất cả" hoặc "ít nhất một".
+    - Ví dụ:
+    const results = ["passed", "passed", "failed"];
+    const allPassed = results.every(res => res === "passed"); // false
+    const hasPassed = results.some(res => res === "passed");  // true
+
+
+### 1.3 Nhóm Tính toán
+
+    .reduce(): Gom mảng thành một giá trị duy nhất.
+    - Ví dụ:
+    const cart = [10, 20, 30];
+    // Tính tổng tiền trong giỏ hàng
+    const total = cart.reduce((sum, item) => sum + item, 0);
+    console.log(total); // 60
+
+
+## 2. CÁC HÀM BUILT-IN CỦA OBJECT (ĐỐI TƯỢNG)
+
+    Giả sử chúng ta có một Object mẫu dùng trong Test Data:
+    const testCase = {
+        id: "TC-01",
+        title: "Verify Login",
+        status: "Passed"
+    };
+
+
+    - Object.keys(obj): Lấy danh sách các tên thuộc tính.
+        + const keys = Object.keys(testCase);
+        + console.log(keys); // ["id", "title", "status"]
+
+
+    - Object.values(obj): Lấy danh sách các giá trị.
+        + const values = Object.values(testCase);
+        + console.log(values); // ["TC-01", "Verify Login", "Passed"]
+
+
+    - Object.entries(obj): Lấy cặp [key, value] (thường dùng để duyệt Object).
+        + Object.entries(testCase).forEach(([key, value]) => {
+            console.log(`${key}: ${value}`);
+        });
+        // id: TC-01, title: Verify Login...
+
+
+    - Object.assign() & Spread Operator (...): Gộp hoặc sao chép Object.
+        + const config = { browser: "Chrome" };
+        + const env = { url: "https://staging.com" };
+        // Gộp 2 object thành 1
+        + const finalConfig = { ...config, ...env };
+        + console.log(finalConfig); // { browser: "Chrome", url: "https://staging.com" }
+
+
+///////////////////////////////////////// ~~~~~~~~~~~~~~~~~ ////////////////////////////////////////////////
+
+Reduce()
+
+1. Ý nghĩa cốt lõi
+    - Trong khi .map() tạo ra một mảng mới có cùng số lượng phần tử, thì .reduce() lại "nghiền" toàn bộ các phần tử 
+trong mảng thành MỘT GIÁ TRỊ DUY NHẤT (có thể là một số, một chuỗi, một object, hoặc thậm chí là một mảng mới).
+
+
+2. Cú pháp và Các thành phần
+    - Cú pháp của .reduce() gồm 2 phần chính:
+
+    1. Callback function: Hàm thực hiện việc "gom tụ", có 2 tham số quan trọng:
+        + accumulator (Biến tích lũy): Giống như cái giỏ để đựng kết quả dồn cộng từ các bước trước.
+        + currentValue: Phần tử hiện tại đang được xét trong mảng.
+
+    2. Initial Value (Giá trị khởi tạo): Giá trị ban đầu của cái giỏ (accumulator).
+
+    - Ví dụ:
+    array.reduce((accumulator, currentValue) => {
+        // Logic xử lý
+        return accumulator; 
+    }, initialValue);
+
+
+3. Ví dụ: Tính tổng tiền giỏ hàng
+    - Hãy tưởng tượng bạn đang tính tổng hóa đơn:
+
+    const cart = [100, 200, 300];
+
+    const total = cart.reduce((sum, price) => {
+        console.log(`Giỏ đang có: ${sum}, Cộng thêm: ${price}`);
+        return sum + price;
+    }, 0); // 0 là giá trị khởi tạo (lúc đầu chưa có đồng nào)
+
+    console.log("Tổng cộng:", total); // 600
+
+    - Cơ chế chạy ngầm:
+        + Lượt 1: sum = 0, price = 100 ->Trả về 100 (đưa vào sum cho lượt sau).
+        + Lượt 2: sum = 100, price = 200 -> Trả về 300.
+        + Lượt 3: sum = 300, price = 300 -> Trả về 600. Kết thúc.
+
+
+4. Ứng dụng "Hardcore" trong Automation Test
+    - Trong Automation, .reduce() cực kỳ mạnh mẽ khi bạn cần xử lý dữ liệu từ UI.
+
+    Bài toán: Bạn lấy được một danh sách các Object kết quả Test và muốn đếm xem có bao nhiêu câu Passed, 
+    bao nhiêu câu Failed.
+
+    const testResults = [
+        { name: "Login", status: "Passed" },
+        { name: "Add Cart", status: "Failed" },
+        { name: "Checkout", status: "Passed" },
+        { name: "Logout", status: "Passed" }
+    ];
+
+    const summary = testResults.reduce((acc, current) => {
+        const status = current.status;
+        // Nếu trạng thái chưa có trong giỏ, khởi tạo bằng 0
+        if (!acc[status]) {
+            acc[status] = 0;
+        }
+        // Cộng thêm 1
+        acc[status]++;
+        return acc;
+    }, {}); // Khởi tạo là một Object rỗng {}
+
+    console.log(summary); 
+    // Kết quả: { Passed: 3, Failed: 1 }
+
+
+///////////////////////////////////////// ~~~~~~~~~~~~~~~~~ ////////////////////////////////////////////////
+
+WARNING
+
+1. Không nên dùng forEach với Async
+    - Hàm forEach được thiết kế để chạy các tác vụ đồng bộ. Khi bạn truyền một hàm async vào forEach, 
+    nó sẽ kích hoạt tất cả các iteration (lượt lặp) cùng một lúc và tiếp tục chạy các dòng code 
+    phía dưới ngay lập tức mà không đợi bất kỳ Promise nào xong cả.
+
+
+    - Ví dụ sai lầm điển hình:
+    const orderIds = [1, 2, 3];
+
+    async function deleteOrders() {
+        console.log("--- Bắt đầu xóa ---");
+
+        orderIds.forEach(async (id) => {
+            await deleteOrderApi(id); // Giả sử mất 2 giây mỗi lần
+            console.log(`Đã xóa xong đơn ${id}`);
+        });
+
+        console.log("--- Kết thúc hàm xóa ---");
+    }
+
+    deleteOrders();
+
+
+    - Kết quả thực tế (sai logic):
+        1. In ra: --- Bắt đầu xóa ---
+        2. In ra: --- Kết thúc hàm xóa --- (Ơ kìa? Chưa kịp xóa đã kết thúc?)
+        3. Khoảng 2 giây sau, 3 dòng Đã xóa xong đơn... hiện ra cùng lúc.
+
+    => Hậu quả trong Automation: Script của bạn sẽ báo Pass hoặc chuyển sang bước tiếp theo trong khi 
+    dữ liệu vẫn chưa được xử lý xong, dẫn đến lỗi Flaky Test.
+
+
+2. Giải pháp thay thế (The Best Practices)
+    - Tùy vào việc bạn muốn chạy Tuần tự (đợi từng cái) hay Song song (chạy tất cả cùng lúc) mà ta 
+    có 2 cách sau:
+
+    1. Cách A: Chạy tuần tự (Sequential) - Dùng for...of
+        + Đây là cách an toàn và dễ hiểu nhất. Vòng lặp sẽ dừng lại ở mỗi bước để đợi await xong rồi mới sang bước tiếp theo.
+        + Ví dụ:
+        async function deleteOrders() {
+            for (const id of orderIds) {
+                await deleteOrderApi(id); 
+                console.log(`Đã xóa đơn ${id} thành công.`);
+            }
+            console.log("Tất cả đã xong!");
+        }
+
+
+    2. Cách B: Chạy song song (Parallel) - Dùng map kết hợp Promise.all
+    - Nếu bạn muốn tiết kiệm thời gian (ví dụ: click 10 checkbox cùng lúc), hãy dùng cách này.
+    - ví dụ:
+        async function deleteOrders() {
+            // map sẽ tạo ra một mảng các Promises
+            const promises = orderIds.map(async (id) => {
+                return deleteOrderApi(id);
+            });
+            // Đợi cho đến khi tất cả các Promises trong mảng xong hết
+            await Promise.all(promises);
+            console.log("Đã xóa toàn bộ song song!");
+        }
+
+
+3. Bảng so sánh nhanh
+
+Phương pháp      | Đợi Async?     | Thứ tự thực hiện                       | Ứng dụng trong Automation
+
+---------------  | ------------   | ------------------------------------    ------------------------------------------
+
+forEach          | ❌ Không       | Bắn ra tất cả cùng lúc rồi chạy tiếp   | Nên tránh dùng với async.
+
+for...of         | ✅ Có          | Từng cái một (Step-by-step)            | Dùng khi các bước cần thứ tự
+                                                                                (ví dụ: các bước thanh toán).
+
+Promise.all      | ✅ Có          | Tất cả cùng lúc (Parallel)             | Dùng khi muốn tăng tốc 
+                                                                                (ví dụ: kiểm tra 10 link trên trang).
+
+---------------  | ------------   | ------------------------------------    ------------------------------------------
+
+
+///////////////////////////////////////// ~~~~~~~~~~~~~~~~~ ////////////////////////////////////////////////
+
+
+Bài 1: Lọc và Biến đổi dữ liệu (Filter & Map)
+Đề bài: Bạn có một mảng danh sách các sản phẩm lấy về từ trang tìm kiếm.
+
+const products = [
+    { name: "iPhone 15", price: 1000, stock: 5 },
+    { name: "Macbook M3", price: 2000, stock: 0 },
+    { name: "AirPods Pro", price: 250, stock: 10 },
+    { name: "iPad Air", price: 600, stock: 0 }
+];
+
+Yêu cầu: 1. Sử dụng .filter() để lấy ra các sản phẩm còn hàng (stock > 0). 2. Sử dụng .map() từ kết quả trên để tạo ra mảng mới chỉ chứa tên của các sản phẩm còn hàng. 3. In mảng tên sản phẩm ra màn hình.
+
+Bài 2: Tính toán báo cáo (Reduce)
+Đề bài: Sau khi chạy một bộ test (Test Suite), bạn nhận được mảng kết quả như sau:
+
+const testResults = [
+    { id: 1, duration: 120, status: "passed" },
+    { id: 2, duration: 450, status: "failed" },
+    { id: 3, duration: 200, status: "passed" },
+    { id: 4, duration: 310, status: "passed" }
+];
+
+Yêu cầu:
+Sử dụng .reduce() để tính tổng thời gian (duration) thực thi của toàn bộ các Test Case.
+(Nâng cao) Tiếp tục dùng .reduce() để đếm xem có bao nhiêu test "passed" và bao nhiêu test "failed" (Kết quả trả về là 1 object: { passed: 3, failed: 1 }).
+
+Bài 3: Kiểm tra điều kiện (Every & Some)
+Đề bài: Bạn cần kiểm tra tính hợp lệ của một danh sách các Input trên Form đăng ký.
+JavaScript
+const formFields = [
+    { label: "Username", value: "quang_test", isValid: true },
+    { label: "Email", value: "test@gmail.com", isValid: true },
+    { label: "Password", value: "123", isValid: false },
+    { label: "Phone", value: "0909", isValid: true }
+];
+
+Yêu cầu:
+Sử dụng .every() để kiểm tra xem tất cả các trường đã hợp lệ (isValid === true) để nhấn nút Submit chưa?
+Sử dụng .some() để kiểm tra xem có ít nhất một trường bị lỗi (isValid === false) để hiển thị thông báo cảnh báo chung không?
+
+Bài 4: Xử lý Cấu hình (Object methods & Spread Operator)
+Đề bài: Bạn có một file cấu hình chung (defaultConfig) và một cấu hình riêng cho môi trường Staging (stagingConfig).
+JavaScript
+const defaultConfig = {
+    browser: "chrome",
+    timeout: 5000,
+    headless: true
+};
+
+const stagingConfig = {
+    timeout: 10000,
+    url: "https://staging.example.com"
+};
+
+Yêu cầu:
+Sử dụng Spread Operator (...) để gộp 2 object này thành finalConfig. Lưu ý: Giá trị của stagingConfig phải ghi đè lên defaultConfig.
+Sử dụng Object.keys() để in ra danh sách các thông số cấu hình có trong finalConfig.
+
+Bài 5: Tìm kiếm và Đối soát (Find & Includes)
+Đề bài: Bạn lấy được danh sách các mã lỗi từ Log hệ thống và một mã lỗi cụ thể từ UI.
+JavaScript
+const systemErrors = [
+    { code: "E01", msg: "Invalid Password" },
+    { code: "E02", msg: "User Not Found" },
+    { code: "E03", msg: "Network Timeout" }
+];
+const errorFromUI = "E02";
+
+Yêu cầu:
+Sử dụng .find() để tìm object lỗi trong systemErrors có mã trùng với errorFromUI.
+Sau khi tìm được, in ra câu thông báo lỗi (msg) tương ứng để so sánh với UI.
+Tạo một mảng phụ chứa các mã lỗi "nghiêm trọng": const criticalErrors = ["E01", "E03"]. Sử dụng .includes() để kiểm tra xem mã errorFromUI có nằm trong danh sách nghiêm trọng hay không.
