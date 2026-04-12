@@ -1,0 +1,138 @@
+Chapter 1: Get Started
+Cài đặt & chuẩn bị môi trường thực hiện dự án
+
+## 1. JavaScript là gì 
+
+### 1.1 Javascript là gì ? 
+JavaScript (JS) là một ngôn ngữ lập trình đa năng (multi-paradigm) được thiết kế ban đầu để tạo các trang web tương tác trên trình duyệt. 
+Ngày nay, JavaScript đã phát triển thành một ngôn ngữ toàn diện có thể chạy ở mọi nơi: từ trình duyệt đến máy chủ, ứng dụng desktop, mobile, và thậm chí IoT. 
+
+Một số đặc điểm chính: 
+- Ngôn ngữ thông dịch (interpreted) – Không cần biên dịch, có thể chạy ngay. - Dạng script động 
+– Có thể thay đổi nội dung HTML/CSS theo thời gian thực. 
+- Hỗ trợ lập trình hướng đối tượng (OOP), hàm (functional), mô-đun (modular). 
+- Là ngôn ngữ chính của Frontend Web và được hỗ trợ bởi mọi trình duyệt.
+
+### 1.2 Ứng dụng thực tế của JavaScript
+
+#### 1.2.1 Phát triển Website (Frontend)
+Dùng để điều khiển giao diện và trải nghiệm người dùng với thư viện/framework nổi
+tiếng như: React, Vue.js, Angular, Svelte
+Ví dụ: Tạo Single Page Applications (SPA) như Facebook, Gmail...
+
+#### 1.2.2 Phát triển phía Server (Backend)
+Dùng với Node.js để xây dựng server/API
+Framework phổ biến: Express.js, NestJS, Fastify
+
+#### 1.2.3. Phát triển Mobile App
+Sử dụng JavaScript để tạo ứng dụng di động đa nền tảng với: React Native, Ionic, Expo
+
+#### 1.2.4 Phát triển Game
+Tạo game 2D/3D đơn giản với HTML5 + JS, dùng thư viện như Phaser, Three.js cho đồ
+họa
+
+#### 1.2.5 Ứng dụng Desktop
+Viết app cho Windows/Mac/Linux bằng Electron.js
+Ví dụ: Visual Studio Code, Slack, Discord đều viết bằng JavaScript
+
+#### 1.2.6. Ứng dụng AI, IoT, Automation
+Xử lý mô hình học máy với TensorFlow.js
+Giao tiếp thiết bị IoT qua JS runtime trên vi điều khiển (Espruino)
+Viết script tự động thao tác trình duyệt (Puppeteer, Playwright)
+
+## 2. Cài đặt môi trường code JavaScript
+Editor/IDE (Integrated Development Environment) cần đáp ứng các tiêu chí:
+- Giá cả hợp lý (ưu tiên mã nguồn mở - miễn phí)
+- Dễ sử dụng
+- Hỗ trợ cú pháp coding (gợi ý code, phát hiện lỗi)
+- Hỗ trợ debug
+- Cộng động sử dụng rộng rãi (community support)
+- Hỗ trợ đa nền tảng: Windows, MacOS, Linux
+
+### 2.1 Các công cụ phổ biến để code JavaScript
+Dùng miễn phí:
+- VSCode: rất phổ biến nhất
+- Sublime Text, Atom
+- Notepad 👌
+Dùng trả phí: WebStorm (JetBrains IDEs)
+
+Trong khóa học này, mình sử dụng Visual Studio Code (VSCode), vì miễn phí, hỗ trợ tốt
+cho việc code JavaScript/TypeScript
+
+### 2.2 Cài đặt Visual Studio Code (VSCode)
+Link download: https://code.visualstudio.com/Download
+
+### 2.3 Cấu hình VSCode
+Format Code
+    - Set up: Format on Save
+    - Mục đích: Mỗi lần nhấn Ctrl + S , code sẽ được auto format trông cho đẹp/dễ nhìn
+
+Auto Save
+    - Setup: Auto Save > onFocusChange
+    - Mục đích: tự save code
+
+Các extensions cài đặt thêm:
+- Code Spell Checker : hỗ trợ check chính tả khi đặt tên tiếng anh
+
+## 3. Cài đặt nodeJS
+
+### 3.1 Why does the tester need Node.js? 
+- Trình duyệt (Chrome/Edge): là môi trường tự nhiên của Javascript (giống như cá dưới nước).
+- Node js: Là "bình oxy" giúp Javascript có thể sống và chạy được trên hệ điều hành (Windows/macOS) mà không
+ cần mở trình duyệt.
+- Ứng dụng thực tế: Tất cả các framework Automation hiện đại như Playwright, Cypress, WebdriverIO đều chạy trên nền Node.js.
+
+### 3.2 Cài node JS
+Link: https://nodejs.org/en/download
+* Lưu ý: Cài đặt nodejs version >= 22
+Chọn bản LTS (long term support)
+
+#### Về Windows
+Bước 1: Cài đặt Node.js: 
+    - Tải xuống và chạy file cài đặt .msi từ trang chủ Node.js, 
+    chọn "Add to PATH" trong quá trình cài đặt để tự động thêm biến môi trường.
+
+Bước 2: Mở System Environment Variables:
+    - Nhấn phím Windows, gõ "env" và chọn "Edit the system environment variables".
+    - Nhấn vào nút "Environment Variables..." ở góc dưới bên phải.
+
+Note: Thêm đường dẫn Node.js (nếu chưa tự thêm):
+    - Tại phần System variables, tìm và chọn Path -> Nhấn Edit.
+    - Nhấn New và thêm đường dẫn tới thư mục cài đặt Node.js (thường là C:\Program Files\nodejs\).
+    - Nhấn OK trên tất cả các cửa sổ.
+
+Kiểm tra cài đặt thành công bằng Terminal/PowerShell/Command Prompt:
+    - Nhập lệnh: node -v và npm -v
+    - Nếu hiện ra phiên bản (ví dụ v20.x.x) là thành công.
+
+## 4. Hello World với JavaScript
+Bước 1: Tạo folder chứa source code
+    * Lưu ý về tên dự án thực hành và đường dẫn (path) nơi lưu trữ code,
+    không dùng ký tự đặc biệt và tiếng việt có dấu
+
+    ** Nên dùng:
+    D://my-project/js-demo
+    ** Không nên dùng:
+    D//dự án/học javascript
+
+    Đặt tên dự án thực hành là: js-demo
+
+Bước 2: Tạo file js
+    console.log("Chào mừng bạn đến với thế giới Automation!");
+    console.log("Hôm nay là ngày: " + new Date().toLocaleDateString());
+
+Bước 3: Chạy với Terminal
+    node app.js
+
+## 5. Làm quen với NPM - Quản lý thư viện
+
+Lệnh khởi tạo: npm init -y (Tạo ra file package.json – "Sổ hộ khẩu" của dự án).
+-> Giải thích: File này lưu danh sách các công cụ (như WDIO, Playwright) mà dự án sẽ dùng.
+
+Bài tập về nhà:
+Mục tiêu: làm quen với việc tự giải quyết vấn đề 
+Cài đặt thành công Node.js và VS Code.
+Tạo một file calculator.js, khai báo 2 số và in ra tổng của chúng bằng console.log.
+Thử thách: Tìm cách cài đặt thư viện colors bằng lệnh npm install colors, 
+sau đó tìm hiểu cách in chữ "Pass" màu xanh và "Fail" màu đỏ ra Terminal.
+
