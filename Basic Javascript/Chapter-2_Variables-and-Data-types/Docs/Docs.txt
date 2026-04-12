@@ -1,0 +1,308 @@
+Chapter 2: VARIABLES & DATA TYPES
+
+## 1. Biến (Variables) - "Cái hộp" đựng dữ liệu
+Trong Automation, bạn không thể gõ đi gõ lại một ID của Element hay một đường dẫn URL. 
+Bạn cần một "cái hộp" để cất nó vào.
+
+### 1.1 Khai báo với let và const
+    - const (Constant): Dùng cho những giá trị không thay đổi suốt quá trình test.
+        + Ví dụ: URL môi trường, Timeout, Tên trình duyệt.
+        + const baseUrl = "https://staging.example.com";
+
+    - let: Dùng cho những giá trị có thể thay đổi.
+        + Ví dụ: Số thứ tự dòng trong Table, nội dung Error Message (thay đổi theo từng case).
+        + let retryCount = 0;
+
+    * Lưu ý cho Tester: Tuyệt đối không dùng var vì nó dễ gây lỗi tranh chấp biến trong các dự án lớn.
+
+## 2. Các kiểu dữ liệu cơ bản (Data Types)
+
+### 2.1 String (Chuỗi ký tự)
+    - Dùng để lưu Text, XPath, CSS Selector.
+    - Cách viết: Dùng dấu nháy đơn ' ', nháy kép " " hoặc Backtick ` `.
+    - Template Literals (Backtick): Cực kỳ hữu dụng để truyền biến vào chuỗi.
+    - Ví dụ:
+    const username = "admin_01";
+    // Cách cũ: "Xin chào " + username
+
+    // Cách hiện đại cho Tester:
+    const message = `Chào mừng ${username} đã đăng nhập thành công!`;
+
+
+### 2.2 Number (Số)
+    - Dùng để lưu số lượng sản phẩm, giá tiền, hoặc thời gian chờ (Wait time).
+    - Ví dụ:
+    const timeout = 5000; // 5 giây
+    let productQuantity = 2;
+
+### 2.3 Boolean (Đúng / Sai)
+    - Dùng để kiểm tra trạng thái của ứng dụng (Assertion).
+    - Ví dụ:
+    const isElementDisplayed = true;
+    const isButtonClickable = false;
+
+## 3. Kiểu dữ liệu cấu trúc (Object & Array) 
+
+### 3.1 Array (Mảng/Danh sách)
+    - Dùng để lưu danh sách dữ liệu test hoặc danh sách các Element.
+    - Ví dụ:
+    const categories = ["Laptop", "Mobile", "Tablet"];
+    - Ứng dụng: Dùng vòng lặp để click lần lượt qua các danh mục này.
+
+### 3.2 Object (Đối tượng)
+    - Dùng để gom nhóm các thông tin liên quan lại với nhau. Đây là cách chúng ta tạo ra 
+    một bộ Data Test hoàn chỉnh.
+    - Ví dụ:
+    const testAccount = {
+        username: "test_user_01",
+        password: "Password123",
+        role: "Admin"
+    };
+    console.log(testAccount.username); // Kết quả: test_user_01
+
+
+## 4. Thực hành tại lớp
+Yêu cầu: Học viên hãy tạo một file testData.js và thực hiện các bước sau:
+    1. Khai báo một hằng số ENVIRONMENT_URL chứa link trang web bất kỳ.
+    2. Tạo một Object loginCredential gồm email và password.
+    3. Tạo một mảng errorMessages chứa 3 câu báo lỗi bạn thường gặp (ví dụ: "Invalid email", "Wrong password").
+    4. Dùng console.log in ra dòng chữ: "Đang test trên môi trường: [ENVIRONMENT_URL] với tài khoản [email]" bằng cách dùng Backtick.
+
+Bài tập 1: Quản lý thông tin môi trường (Cơ bản)
+Yêu cầu: 
+    1. Khai báo một hằng số BASE_URL chứa địa chỉ: https://automationfc.com. 
+    2. Khai báo một biến timeout và gán giá trị là 30000 (ms). 
+    3. In ra màn hình dòng chữ: "Hệ thống sẽ kiểm thử trên trang: https://automationfc.com với thời gian chờ là 30000ms".
+
+Bài 2: Mô phỏng dữ liệu đăng nhập (Object)
+    1. Tạo một Object tên là userAccount bao gồm các thuộc tính: username, password, và role (Admin/User).
+    2. Hãy in ra màn hình thông tin username và role của đối tượng đó.
+    3. Thử thách: Thay đổi giá trị của role từ "User" thành "Manager" và in lại Object để kiểm tra.
+
+Bài 3: Danh sách sản phẩm trong giỏ hàng (Array)
+Yêu cầu:
+    1. Tạo một mảng (Array) tên là cartItems chứa tên của 3 sản phẩm (ví dụ: "iPhone 15", "Samsung S23", "Macbook M3").
+    2. In ra màn hình số lượng sản phẩm đang có trong giỏ hàng (sử dụng thuộc tính .length).
+    3. In ra tên của sản phẩm thứ 2 trong danh sách.
+    Lưu ý: Nhớ rằng mảng trong Javascript bắt đầu từ vị trí số 0.
+
+Bài 4: Kiểm tra trạng thái Test Case (Boolean & Logic)
+Yêu cầu:
+    1. Khai báo một biến isElementDisplayed và gán giá trị true.
+    2. Khai báo một biến errorMessage và gán giá trị là một chuỗi rỗng "".
+    3. In ra kiểu dữ liệu của hai biến trên bằng lệnh typeof.
+    4. Ứng dụng: Hãy tạo một biến testResult để lưu kết quả phép so sánh: "Nếu isElementDisplayed là true VÀ errorMessage là chuỗi rỗng thì testResult sẽ là true". In testResult ra console.
+
+Bài 5: Xây dựng bộ Selector (Dữ liệu thực tế)
+Yêu cầu: Trong Automation, chúng ta thường quản lý Locator của các Element. Hãy tạo một Object tên là loginPageLocators chứa:
+    - usernameInput: "input#username"
+    - passwordInput: "input#password"
+    - loginButton: "button.btn-primary"
+    - rememberMeCheckbox: "input[type='checkbox']"
+    Nâng cao: Tạo một chuỗi bằng Backtick để mô phỏng một dòng log: 
+    "Thực hiện Click vào phần tử có Selector là: [giá trị của loginButton ở trên]"
+
+
+## 5. Advanced array and object
+
+### 5.1 Array (Mảng) - Danh sách dữ liệu tập trung
+Hãy tưởng tượng Array là một danh sách các hành động hoặc danh sách sản phẩm trên trang thương mại điện tử.
+
+    1. Cách khởi tạo
+    const fruits = ["Apple", "Banana", "Orange"];
+    const productPrices = [100, 200, 300];
+
+    2. Các thao tác cho Array
+
+
+Thao tác                    | Lệnh                    | Ứng dụng
+---------------------------  ------------------------  --------------------------------------------------
+
+Thêm vào cuối               | .push("Giá trị")        | Thêm một lỗi (Bug) mới vào cuối danh sách báo cáo.
+
+Xóa phần tử cuối            | .pop()                  | Loại bỏ bước cuối cùng trong kịch bản test.
+
+Thêm vào đầu                | .unshift("Giá trị")     | Ưu tiên chạy một Test Case lên đầu danh sách.
+
+Xóa phần tử đầu             | .shift()                | Loại bỏ Test Case đã chạy xong khỏi hàng đợi.
+
+Độ dài mảng                 | .length                 | Kiểm tra số lượng sản phẩm hiển thị trên UI có đúng không.
+
+Tìm vị trí                  | .indexOf("Giá trị")     | Tìm xem "Nút Đăng ký" nằm ở vị trí thứ mấy.
+
+---------------------------  ------------------------  --------------------------------------------------
+
+
+### 5.2 Object (Đối tượng) - Gom nhóm thông tin thực tế
+Object giúp bạn quản lý thông tin một đối tượng cụ thể (User, Product, Page) thay vì các biến rời rạc.
+
+    1. Cách sử dụng (Truy cập & Chỉnh sửa)
+    const user = { fullName: "Nguyen Van A", age: 25, isPremium: true };
+
+    // 1.1 Lấy dữ liệu (Dùng dấu chấm) 
+    console.log(user.fullName); 
+    // Output: Nguyen Van A 
+
+    // 1.2 Thêm hoặc cập nhật thuộc tính 
+    user.job = "Tester";
+
+    // Thêm mới 
+    user.age = 26; 
+
+    // Cập nhật giá trị cũ 
+    user.isPremium = false;
+
+    // 1.3 Xóa thuộc tính delete
+    delete user;
+    
+
+    2. Kết hợp Object và Array (Cấu trúc Data Driven)
+    Đây là cách chúng ta tạo ra file chứa hàng loạt tài khoản để test tính năng Login:
+
+    const testUsers = [
+        { user: "admin", pass: "123" },
+        { user: "staff", pass: "456" },
+        { user: "guest", pass: "789" }
+    ];
+    // Cách lấy mật khẩu của user thứ 2 (staff):
+    console.log(testUsers[1].pass); // Kết quả: "456"
+
+
+## 6. Thực hành: "Xây dựng Kho dữ liệu Test"
+Bài tập 1: Quản lý danh sách lỗi (Array)
+    1. Tạo mảng bugList chứa 3 lỗi: "Lỗi giao diện", "Lỗi API", "Lỗi Logic".
+    2. Dùng lệnh để thêm lỗi "Lỗi bảo mật" vào cuối danh sách.
+    3. Xóa lỗi đầu tiên ra khỏi mảng.
+    4. In ra màn hình: "Danh sách hiện có [số lượng] lỗi".
+
+Bài tập 2: Quản lý thông tin cấu hình (Object)
+    1. Tạo một Object config bao gồm: browser: "Chrome", headless: false, retries: 2.
+    2. Hãy đổi headless thành true.
+    3. Thêm một thuộc tính mới là screenshot: "on-failure".
+    4. In toàn bộ Object config ra màn hình.
+
+## 7. CÁC LỖI PHỔ BIẾN KHI DÙNG OBJECT & ARRAY (TESTER'S TRAPS)
+    1. Lỗi "Truy cập vào phần tử rỗng" (Undefined / Cannot read property)
+    -> Đây là lỗi thường gặp trong Javascript.
+    
+    * Với Array: Truy cập vào index (vị trí) không tồn tại.
+    const loginSteps = ["Mở Web", "Nhập User", "Nhập Pass"];
+    console.log(loginSteps[3]); // Kết quả: undefined (Vì mảng chỉ có index 0, 1, 2)
+
+    * Với Object: Truy cập vào thuộc tính không có sẵn.
+    const config = { browser: "Chrome" };
+    console.log(config.version); // Kết quả: undefined
+
+    => Hệ quả trong Test: Nếu bạn dùng giá trị undefined này để truyền vào một hàm 
+    (ví dụ: .click(undefined)), script sẽ crash ngay lập tức với thông báo lỗi: 
+    TypeError: Cannot read property '...' of undefined.
+
+    -------------------------------------------------------------------------------------------------
+
+    2. Lỗi "Tham chiếu" (Reference vs Value) - Lỗi cực kỳ nguy hiểm
+    - Nhiều Tester nghĩ rằng khi gán b = a thì b là một bản sao mới. Nhưng với Object và Array, 
+    chúng dùng chung địa chỉ vùng nhớ.
+
+    Ví dụ sai lầm:
+    const originalAccount = { user: "admin", pass: "123" };
+    const tempAccount = originalAccount; // Tưởng là copy, nhưng thực tế là "dùng chung"
+    tempAccount.pass = "999"; // Đổi pass ở biến tạm
+    console.log(originalAccount.pass); // Kết quả: "999" (Bản gốc bị đổi luôn!)
+
+    => Hệ quả: Bạn dùng một bộ data test cho Case A, nhưng vô tình làm thay đổi nó, khiến Case B chạy sau đó bị Fail vì dữ liệu không còn như ban đầu.
+    ==> Cách sửa: Dùng cú pháp Spread Operator (...) để tạo bản sao thực sự: 
+    const tempAccount = { ...originalAccount };
+
+    -------------------------------------------------------------------------------------------------
+
+    3. Lỗi "Đọc dữ liệu từ mảng rỗng"
+    - Khi bạn dùng Selenium/Playwright để lấy danh sách Element (ví dụ: danh sách sản phẩm), 
+    nếu trang web chưa kịp load, mảng trả về sẽ là [] (rỗng).
+    + Lỗi: Bạn cố gắng lấy products[0].click().
+    => Hệ quả: Vì mảng rỗng nên products[0] là undefined, dẫn đến lỗi crash.
+    ==> Lời khuyên: Luôn kiểm tra if (products.length > 0) trước khi thao tác.
+    => Best practices: sử dụng wait 
+
+    -------------------------------------------------------------------------------------------------
+
+    4. Lỗi "Quên từ khóa delete" (Dọn dẹp Object)
+    - Trong một số kịch bản Test API, bạn cần gửi một Object lên nhưng phải xóa bớt một trường dữ liệu 
+    để test trường hợp "Thiếu thông tin".
+    + Lỗi: Gán user.password = null hoặc user.password = "".
+    => Thực tế: Server vẫn nhận được trường password (với giá trị rỗng/null). 
+    Để thực sự xóa bỏ trường đó khỏi Object, bạn phải dùng: delete user.password;
+
+    -------------------------------------------------------------------------------------------------
+
+    5. Lỗi "So sánh hai Object/Array" (The Equality Trap)
+    - Dù hai Object nhìn y hệt nhau, Javascript vẫn bảo chúng Khác nhau.
+    const user1 = { id: 1 };
+    const user2 = { id: 1 };
+    console.log(user1 === user2); // Kết quả: FALSE (Vì chúng nằm ở 2 ô nhớ khác nhau)
+    => Hệ quả: Khi bạn so sánh kết quả thực tế (Actual) trả về từ API (là một Object) với kết quả mong đợi (Expected), dùng === sẽ luôn báo Fail.
+    ==> Cách sửa: Phải so sánh từng thuộc tính bên trong (user1.id === user2.id) hoặc chuyển chúng sang chuỗi JSON để so sánh: JSON.stringify(user1) === JSON.stringify(user2)
+
+==> Tổng kết:
+    - Index: Luôn nhớ mảng bắt đầu từ 0. Phần tử cuối là length - 1.
+    - Copy: Muốn copy Object/Array, hãy dùng ... (spread operator).
+    - Check: Trước khi truy cập vào phần tử mảng, hãy check .length.
+    - Compare: Không dùng == hay === để so sánh trực tiếp hai Object/Array.
+
+
+------------------------------------------- /\/\/\/\/\/\/\/\ -----------------------------------------
+
+JAVASCRIPT CHEAT SHEET: OBJECT & ARRAY (FOR TESTERS)
+
+    1. ARRAY (MẢNG) - QUẢN LÝ DANH SÁCH
+    - Dùng cho: Danh sách Locator, Danh sách Data Test, Danh sách lỗi.
+
+    - Các lệnh phổ biến:
+    + Thêm vào cuối: array.push(value) ➡️ (Dùng khi bắt được lỗi mới).
+    + Thêm vào đầu: array.unshift(value) ➡️ (Ưu tiên chạy test case này trước).
+    + Xóa ở cuối: array.pop()
+    + Xóa ở đầu: array.shift()
+    + Số lượng phần tử: array.length ➡️ (Verify số lượng item trên UI).
+    + Lấy phần tử cuối cùng: array[array.length - 1]
+
+    - Lỗi thường gặp (Array Traps):
+    + Index bắt đầu từ 0: Phần tử thứ 1 là [0], phần tử thứ 2 là [1].
+    + Lỗi Undefined: Truy cập array[10] khi mảng chỉ có 5 phần tử sẽ trả về undefined. Script sẽ crash nếu bạn cố .click() vào nó.
+    + Kiểm tra mảng rỗng: Luôn dùng if (array.length > 0) trước khi thao tác để tránh lỗi trang web chưa load kịp dữ liệu.
+
+    2. OBJECT (ĐỐI TƯỢNG) - QUẢN LÝ THÔNG TIN
+    - Dùng cho: Tài khoản đăng nhập, Cấu hình môi trường (Config), Page Objects.
+
+    - Các lệnh phổ biến:
+    + Truy cập giá trị: object.key hoặc object["key"]
+    + Thêm/Sửa thuộc tính: object.newKey = value
+    + Xóa thuộc tính: delete object.key ➡️ (Dùng để test API thiếu trường dữ liệu).
+    + Kiểm tra có thuộc tính không: "key" in object (Trả về true/false).
+
+    - Lỗi thường gặp (Object Traps):
+    + Lỗi "Dùng chung": Khi gán objB = objA, nếu bạn sửa objB thì objA cũng bị sửa theo.
+    => Giải pháp: Dùng objB = { ...objA } để tạo bản sao độc lập.
+    + So sánh hai Object: {id:1} === {id:1} luôn trả về FALSE.
+    => Giải pháp: So sánh từng giá trị bên trong hoặc dùng JSON.stringify().
+
+    3. DATA DRIVEN TESTING (KẾT HỢP CẢ HAI)
+    - Cách tổ chức dữ liệu chuyên nghiệp để chạy 1 script cho nhiều bộ data:
+
+    const testData = [
+        { user: "admin", pass: "123", expected: "Dashboard" },
+        { user: "guest", pass: "456", expected: "Home" }
+    ];
+
+    // Truy cập mật khẩu của bộ data thứ nhất:
+    console.log(testData[0].pass); 
+
+    4. CÁCH ĐỌC LỖI NHANH (DEBUG QUICK GUIDE)
+Lỗi hiển thị trên Console                            | Nguyên nhân thường gặp
+---------------------------------------------         -----------------------------------------------------------------------
+TypeError: Cannot read property '...' of undefined   | Bạn đang cố lấy dữ liệu từ một Object hoặc Array rỗng/không tồn tại.
+
+ReferenceError: ... is not defined                   | Bạn gọi một biến chưa được khai báo bằng let hoặc const.
+
+SyntaxError: Unexpected token ...                    | Thiếu dấu phẩy , giữa các phần tử hoặc thiếu dấu ngoặc { }, [ ].
+
+---------------------------------------------          -----------------------------------------------------------------------
+
