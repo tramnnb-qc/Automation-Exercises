@@ -1,0 +1,110 @@
+Chapter 6: JAVASCRIPT CONVENTION - CLEAN CODE
+Mục tiêu: Nắm vững các quy tắc "ngầm" để code dễ đọc, dễ hiểu và chuẩn công nghiệp.
+
+I. Quy tắc đặt tên (Naming Conventions)
+Đây là phần quan trọng nhất để phân biệt một Tester "nghiệp dư" và một Automation Engineer thực thụ.
+1. Biến và Hàm: camelCase (Lạc đà)
+Quy tắc: Viết hoa chữ cái đầu tiên của từ thứ hai trở đi.
+Áp dụng: Biến (let, const) và Tên hàm (function).
+✅ Nên: loginButton, errorMessage, getTestContext()
+❌ Không nên: login_button, LoginButton, lo_gin
+2. Hằng số: UPPER_SNAKE_CASE (Viết hoa toàn bộ)
+Quy tắc: Viết hoa hết, các từ cách nhau bởi dấu gạch dưới.
+Áp dụng: Các giá trị cố định, cấu hình hệ thống.
+✅ Nên: BASE_URL, MAX_RETRY, DEFAULT_TIMEOUT
+3. Class: PascalCase
+Quy tắc: Viết hoa chữ cái đầu tiên của tất cả các từ.
+Áp dụng: Khi viết Page Object Model (POM).
+✅ Nên: LoginPage, HomePage, ProductDetail
+
+II. Cách đặt tên có ý nghĩa (Meaningful Names)
+Đừng đặt tên biến là a, b, c. Hãy đặt tên sao cho người khác đọc vào biết ngay nó chứa cái gì.
+Biến Boolean: Nên bắt đầu bằng is, has, should.
+Ví dụ: isElementVisible, hasError, shouldNavigate
+Hàm (Function): Nên bắt đầu bằng một Động từ.
+Ví dụ: clickSubmitButton(), inputUsername(), verifyTitle()
+
+III. Quy tắc trình bày (Formatting)
+1. Dấu ngoặc nhọn { }
+Trong Javascript, quy ước phổ biến là dấu ngoặc mở nằm trên cùng một dòng với câu lệnh.
+
+// ✅ Nên (K&R Style)
+if (status === "pass") {
+    console.log("Success");
+}
+
+// ❌ Không nên
+if (status === "pass") 
+{
+    console.log("Success");
+}
+
+
+2. Thụt lề (Indentation)
+Sử dụng 2 dấu cách (Spaces) hoặc 1 Tab.
+Luôn thống nhất trong toàn bộ dự án. (Nên dùng extension Prettier để tự động hóa việc này).
+3. Dấu chấm phẩy ; (Semicolons)
+Mặc dù Javascript có thể tự hiểu nếu thiếu, nhưng để tránh các lỗi logic hiếm gặp và giúp code rõ ràng, Tester nên luôn có dấu chấm phẩy ở cuối mỗi câu lệnh.
+
+IV. Comment (Ghi chú) - Viết sao cho "vừa đủ"
+Nên: Giải thích tại sao chúng ta làm thế này (nếu logic phức tạp).
+Không nên: Giải thích cái gì (nếu code đã quá rõ nghĩa).
+❌ // Click vào nút login -> Thừa, vì lệnh loginBtn.click() đã nói lên điều đó.
+✅ // Cần đợi 5s vì hệ thống chuyển trang chậm trên môi trường Staging -> Hữu ích.
+
+V. Cheat Sheet: Quy tắc vàng cho Automation Tester
+Thành phần
+Convention
+Ví dụ
+Biến/Hàm
+camelCase
+submitButton, checkTitle()
+Hằng số
+UPPER_SNAKE_CASE
+STAGING_URL
+Class
+PascalCase
+InventoryPage
+Thụt lề
+2 spaces
+(Sử dụng Prettier)
+Chuỗi
+Single quotes hoặc Backticks
+'Hello', `Total: ${sum}`
+
+
+
+
+📝 Bài tập thực hành: "Refactoring Code"
+Hãy yêu cầu học viên sửa lại đoạn code "thảm họa" sau đây cho đúng Convention:
+const base_url = "https://google.com"
+let Isvisible = true
+function DANGNHAP(u,p)
+{
+let Error_message = "fail";
+console.log(Error_message)
+}
+
+
+Bài 1: Chỉnh lại đoạn code dưới đây cho đúng convention
+const Url_DANG_NHAP = "https://test-site.com/login"
+let Kiemtra_button = true
+var user = "admin_01"
+
+function Kiem_Tra_Login(U, P){
+if(U === "admin"){
+console.log("Welcome")
+}else{
+let ERROR_MSG = "Sai pass rùi"
+console.log(ERROR_MSG)
+}
+}
+
+
+Bài 2: Thiết kế "Bộ khung" Dữ liệu (Data Architect)
+Bạn đang xây dựng một dự án Automation cho một trang web bán điện thoại. 
+Yêu cầu: 
+1. Khai báo một hằng số lưu thời gian chờ mặc định (Timeout) là 5000ms. 
+2. Tạo một danh sách (Array) chứa 3 đối tượng (Object) sản phẩm. Mỗi đối tượng phải có: id, tên sản phẩm, giá tiền, và trạng thái còn hàng. 
+3. Lưu ý quan trọng: Tất cả tên biến, tên thuộc tính phải đặt theo chuẩn camelCase, tên hằng số theo UPPER_SNAKE_CASE. Tên phải bằng tiếng Anh chuyên ngành (ví dụ: isStocked hoặc inStock thay vì conHang).
+
