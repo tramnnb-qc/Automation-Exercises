@@ -1,0 +1,51 @@
+1: B -> let có block scope, var có function scope.
+=> Trong for, let tạo biến riêng mỗi vòng lặp.
+
+2: C -> map() dùng để transform mảng → mảng mới
+
+3: C -> typeof [1,2,3] === "object"
+=> JS không có kiểu array riêng
+
+4: D -> Cả 3 đều dùng được tùy case:
+includes() → check đơn giản (true/false) -> error exist
+find() → lấy phần tử
+some() → check điều kiện -> object match
+
+5: B -> Dynamic key phải dùng: object[variableName]
+
+6: B -> Output: 1 → 3 → 2
+=> setTimeout là macrotask, chạy sau call stack
+
+7: C -> Promise bắt đầu ở trạng thái: Pending
+
+8: C -> await chỉ dùng trong async function
+
+9: B -> Promise.all: 1 promise fail → fail ngay lập tức
+
+10: D -> Cả 2 cách đều đúng: .catch() & try...catch
+
+11: B -> Microtask (Promise) chạy trước Macrotask
+
+12: C -> Tạo object: new
+
+13: C -> Hàm chạy đầu tiên: constructor()
+
+14: B -> Kế thừa = Inheritance
+
+15: B -> super() gọi constructor của class cha
+
+16: D -> Có 2 cách:
+_name → convention
+#name → private thật (ES6+)
+
+17: A -> Polymorphism:
+Cùng function login()
+Nhưng chạy Web / Mobile khác nhau
+
+18: B -> static: ClassName.method()
+
+19: A -> Abstraction trong POM:
+Giấu selector
+Chỉ expose action: loginPage.login()
+
+20: B -> this = instance hiện tại
