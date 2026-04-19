@@ -27,3 +27,5 @@ console.log(allValidate);
 
 const hasInValidate = formFields.some((res) => res.isValid === false);
 console.log(hasInValidate);
+
+// Thêm trường hợp bị form fail hết ???

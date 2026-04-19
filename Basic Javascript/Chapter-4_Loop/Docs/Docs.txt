@@ -1,0 +1,159 @@
+Chapter 4: VÒNG LẶP (LOOPS)
+Mục tiêu: Giúp script tự động thực hiện một hành động nhiều lần mà không cần viết lại code.
+Ví dụ: Quét mã QR tại siêu thị" – máy quét sẽ lặp lại hành động quét cho đến khi nghe tiếng "Tít" (thành công) thì dừng lại.
+
+I. Tại sao Tester cần Vòng lặp?
+Hãy đặt vấn đề cho học viên:
+Tình huống: Bạn cần kiểm tra 50 sản phẩm trên trang Web xem có đủ nút "Thêm vào giỏ hàng" hay không.
+Cách thủ công: Viết 50 dòng code .checkElement(product1), .checkElement(product2)...
+Cách dùng Vòng lặp: Chỉ viết 1 đoạn code duy nhất và bảo Javascript: "Hãy chạy đoạn này 50 lần cho tôi".
+
+II. Vòng lặp for i(căn bản)
+Dùng khi bạn biết rõ mình muốn lặp lại bao nhiêu lần.
+1. Cú pháp
+for (khởi_tạo; điều_kiện; bước_nhảy) {
+    // Khối lệnh thực hiện
+}
+
+
+2. Ví dụ thực tế: Chờ đợi phần tử (Retry Logic)
+
+for (let i = 1; i <= 5; i++) {
+    console.log(`Thử tìm phần tử lần thứ ${i}...`);
+    // Nếu tìm thấy thì dừng, nếu không sẽ thử lại tối đa 5 lần.
+}
+
+
+
+III. Vòng lặp for...of (Dành riêng cho Array)
+Vòng lặp này gặp rất nhiều vì nó cực kỳ dễ đọc và chuyên dùng để duyệt danh sách (Array).
+1. Cú pháp
+for (const item of danh_sách_mảng) {
+    // Làm gì đó với từng item
+}
+
+
+2. Ví dụ: Duyệt danh sách sản phẩm
+
+const products = ["iPhone", "Samsung", "Oppo"];
+
+for (const name of products) {
+    console.log(`Đang kiểm tra sản phẩm: ${name}`);
+}
+
+
+Ưu điểm: Bạn không cần quan tâm mảng có bao nhiêu phần tử, nó sẽ tự động chạy từ đầu đến cuối.
+
+IV. Vòng lặp while (Lặp đến khi nào thỏa mãn thì thôi)
+Dùng khi bạn không biết trước phải lặp bao nhiêu lần, chỉ biết lặp cho đến khi gặp một điều kiện nhất định.
+Ví dụ: Click nút "Tải thêm" (Load more) cho đến khi không còn nút đó trên màn hình nữa.
+let isButtonVisible = true;
+
+while (isButtonVisible) {
+    console.log("Đang click nút Load More...");
+    // Logic giả lập: sau 3 lần click thì hết nút
+    // if (nut_bien_mat) isButtonVisible = false;
+}
+
+
+
+
+
+
+V. break và continue
+break (Dừng ngay lập tức): Dùng khi bạn đã tìm thấy thứ mình cần và không muốn lặp tiếp nữa.
+Ví dụ: Tìm trong danh sách 1000 user, thấy user "Admin" thì dừng lại để Test.
+continue (Bỏ qua lượt này): Bỏ qua phần còn lại của lượt hiện tại và nhảy sang lượt tiếp theo.
+Ví dụ: Duyệt danh sách sản phẩm, nếu sản phẩm nào "Hết hàng" thì bỏ qua, không Click vào.
+
+VI. Thực hành: "Automation Script Simulator"
+Bài tập 1: Quét qua danh sách lỗi Cho mảng 
+const bugs = ["Bug 1", "Bug 2", "Bug 3", "Bug 4"]; 
+Hãy dùng vòng lặp for để in ra: Đang xử lý Bug 1 Đang xử lý Bug 2...
+Bài tập 2: Tìm kiếm dữ liệu (Dùng break) Cho mảng 
+const names = ["Luke", "Diện", "Điểm", "Trâm", "Ngân"]; Hãy dùng vòng lặp để tìm tên "Ngân". Khi thấy tên "Ngân", in ra "Đã tìm thấy Ngân!" và dừng vòng lặp ngay lập tức.
+Bài tập 3: Data Driven nâng cao (Object + Array + Loop) Cho danh sách tài khoản:
+
+const users = [
+    { name: "User 1", status: "Active" },
+    { name: "User 2", status: "Inactive" },
+    { name: "User 3", status: "Active" }
+];
+
+
+Hãy dùng vòng lặp for...of để in ra tên của những User có trạng thái là "Active".
+
+
+
+VII. Warning!!! (Tips)
+Vòng lặp vô tận (Infinite Loop): Quên thay đổi điều kiện dừng trong while, khiến máy tính bị treo. (Ví dụ: while(true) mà không có break).
+Lỗi Index: Với vòng lặp for, học viên hay viết i <= array.length.
+Đúng phải là: i < array.length (vì index bắt đầu từ 0).
+Thay đổi mảng khi đang lặp: Vừa lặp qua danh sách vừa dùng .pop() hoặc .shift() sẽ khiến vòng lặp bị loạn vị trí.
+
+
+🏆 BÀI TẬP THỬ THÁCH: HỆ THỐNG QUẢN LÝ ĐƠN HÀNG (ORDER MANAGER)
+Ngữ cảnh: Bạn đang viết script để kiểm tra danh sách đơn hàng từ một API trả về. Bạn cần duyệt qua danh sách này để thực hiện các hành động kiểm thử khác nhau dựa trên trạng thái và giá trị của từng đơn hàng.
+Dữ liệu đầu vào:
+const orders = [
+    { id: "ORD001", amount: 500, status: "completed", customer: "An" },
+    { id: "ORD002", amount: 1200, status: "pending", customer: "Bình" },
+    { id: "ORD003", amount: 7000, status: "completed", customer: "Ngân" },
+    { id: "ORD004", amount: 50, status: "canceled", customer: "Chi" },
+    { id: "ORD005", amount: 3000, status: "completed", customer: "Dũng" },
+    { id: "ORD006", amount: 150, status: "pending", customer: "Đạt" },
+    { id: "ORD007", amount: 800, status: "completed", customer: "Hương" }
+];
+
+
+Yêu cầu bài tập (Gồm 4 cấp độ):
+Cấp độ 1 (Duyệt mảng): Sử dụng vòng lặp để in ra tên tất cả các khách hàng đã mua hàng.
+Cấp độ 2 (Lọc dữ liệu): Chỉ in ra mã đơn hàng (id) của những đơn hàng có trạng thái là "completed".
+Cấp độ 3 (Tính toán & Logic): * Hãy tính Tổng số tiền của tất cả các đơn hàng có trạng thái "completed".
+Nếu đơn hàng nào có amount > 1000, hãy in thêm dòng chữ: "Đơn hàng VIP: [Mã ID]".
+Cấp độ 4 (Tìm kiếm & Dừng): * Khách hàng tên "Chi" đang khiếu nại. Hãy dùng vòng lặp để tìm đơn hàng của "Chi".
+Khi tìm thấy, hãy in ra toàn bộ thông tin đơn hàng đó và dừng vòng lặp ngay lập tức (không cần kiểm tra các đơn hàng phía sau nữa để tiết kiệm tài nguyên).
+
+🔥 BÀI TẬP SIÊU THỬ THÁCH: HỆ THỐNG KIỂM TRA GIỎ HÀNG ĐA QUỐC GIA
+Ngữ cảnh: Bạn đang viết script để kiểm tra giỏ hàng của một hệ thống thương mại điện tử toàn cầu. Dữ liệu trả về là một danh sách các "Kiện hàng" (Packages), bên trong mỗi kiện hàng lại chứa một danh sách các "Sản phẩm" (Items).
+Dữ liệu đầu vào:
+const deliveryData = [
+    {
+        packageId: "PKG_001",
+        region: "Asia",
+        items: [
+            { name: "iPhone 15", price: 1000, quantity: 2 },
+            { name: "Mouse", price: 50, quantity: 5 }
+        ]
+    },
+    {
+        packageId: "PKG_002",
+        region: "Europe",
+        items: [
+            { name: "Macbook", price: 2000, quantity: 1 },
+            { name: "Keyboard", price: 150, quantity: 0 } // Lỗi: Số lượng bằng 0
+        ]
+    },
+    {
+        packageId: "PKG_003",
+        region: "America",
+        items: [
+            { name: "Screen", price: 500, quantity: 3 }
+        ]
+    }
+];
+
+
+Yêu cầu bài tập (4 cấp độ):
+Dễ (Nested Loop): Duyệt qua toàn bộ dữ liệu và in ra tên của tất cả sản phẩm có trong mọi kiện hàng theo định dạng: [Mã Kiện Hàng] - [Tên Sản Phẩm].
+Thường (Data Validation): Trong quá trình duyệt, nếu phát hiện sản phẩm nào có quantity (số lượng) bằng 0, hãy in ra cảnh báo: [⚠️ WARNING] Sản phẩm [Tên Sản Phẩm] trong kiện [Mã ID] bị lỗi số lượng!.
+Khó (Complex Calculation): * Tính tổng giá trị của từng kiện hàng (Giá trị kiện hàng = Tổng của các price * quantity bên trong).
+In ra kết quả: Kiện hàng [Mã ID] ở vùng [Region] có tổng giá trị là: [Tổng tiền]$.
+Ác Mộng (Logic Tìm kiếm nâng cao): * Tìm xem trong tất cả các kiện hàng, có sản phẩm nào tên là "Macbook" thuộc vùng "Europe" hay không?
+Nếu có, hãy in ra: 🚩 Đã tìm thấy Macbook tại Châu Âu!.
+Yêu cầu tối ưu: Ngay khi tìm thấy Macbook tại Châu Âu, hãy dừng toàn bộ việc kiểm tra (thoát ra khỏi tất cả các vòng lặp) để tiết kiệm thời gian chạy test.
+
+💡 Gợi ý:
+Vòng lặp lồng nhau: Bạn cần một vòng for bên ngoài để duyệt deliveryData (kiện hàng), và một vòng for bên trong để duyệt mảng items của kiện hàng đó.
+Thoát vòng lặp lồng nhau: Để dừng cả 2 vòng lặp cùng lúc khi tìm thấy "Macbook", bạn có thể dùng một biến cờ hiệu (Flag) như let found = false; hoặc đưa toàn bộ code vào một hàm và dùng return.
+Tính tổng: Nhớ reset biến totalPackagePrice = 0 mỗi khi bắt đầu duyệt một kiện hàng mới.

@@ -1,0 +1,177 @@
+Chapter 8: CLASS & OBJECTS - TƯ DUY LẬP TRÌNH HƯỚNG ĐỐI TƯỢNG (OOP)
+Mục tiêu: Hiểu cách dùng Class để làm "khuôn mẫu" tạo ra các đối tượng dữ liệu giống nhau.
+
+1. Tại sao cần Class? (Ẩn dụ thực tế)
+Hãy tưởng tượng bạn đang quản lý một danh sách 100 tài khoản Test.
+Cách thủ công: Bạn tạo 100 Object { user: "...", pass: "..." }. Nếu cần thêm một hành động "Đăng nhập", bạn phải viết lại code cho cả 100 cái.
+Cách dùng Class: Bạn tạo một Bản thiết kế (Class) tên là Account. Trong đó có sẵn thông tin và hành động login(). Sau này, bạn chỉ cần "đúc" ra bao nhiêu tài khoản tùy thích từ khuôn này.
+
+2. Cấu trúc của một Class
+Một Class cơ bản gồm 3 phần: Tên Class, Thuộc tính (Property) và Phương thức (Method).
+a. Khai báo Class
+class UserAccount {
+    // 1. Hàm khởi tạo (Dùng để nhận dữ liệu khi tạo mới)
+    constructor(username, password, role) {
+        this.username = username; // "this" trỏ đến chính đối tượng đang tạo
+        this.password = password;
+        this.role = role;
+    }
+
+    // 2. Phương thức (Hành động của đối tượng)
+    displayInfo() {
+        console.log(`User: ${this.username} | Quyền: ${this.role}`);
+    }
+
+    login() {
+        console.log(`--- Đang đăng nhập hệ thống với user: ${this.username} ---`);
+    }
+}
+
+
+
+
+b. Tạo đối tượng từ Class (Instantiation)
+Sử dụng từ khóa new để tạo ra một thực thể cụ thể.
+const admin = new UserAccount("admin_01", "Secret123", "Admin");
+const tester = new UserAccount("test_user_02", "Pass111", "Tester");
+
+admin.displayInfo(); // Output: User: admin_01 | Quyền: Admin
+tester.login();      // Output: --- Đang đăng nhập hệ thống với user: test_user_02 ---
+
+
+
+3. Các khái niệm "Quan trọng"
+a. constructor (Hàm khởi tạo)
+Là hàm tự động chạy duy nhất một lần khi bạn gọi new ClassName().
+Dùng để thiết lập các giá trị ban đầu cho đối tượng.
+b. Từ khóa this
+this đại diện cho chính đối tượng đó.
+Hãy ví this như từ "tôi": "Tên của tôi là An", "Mật khẩu của tôi là 123".
+c. Phương thức (Methods)
+Thực chất là các hàm nằm bên trong Class.
+Trong Automation, đây chính là nơi chứa các hành động như: click(), input(), verify().
+
+4. Kết hợp Class với Asynchronous (Async Class)
+Trong thực tế, các hành động của Class thường mất thời gian (ví dụ: login cần đợi server).
+
+class DatabaseConnector {
+    constructor(dbName) {
+        this.dbName = dbName;
+    }
+
+    async connect() {
+        console.log(`Đang kết nối tới DB: ${this.dbName}...`);
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                console.log("Kết nối thành công!");
+                resolve(true);
+            }, 2000);
+        });
+    }
+}
+
+// Cách dùng
+const myDb = new DatabaseConnector("Staging_DB");
+await myDb.connect();
+
+
+
+
+5. Bài tập thực hành tại lớp
+Bài 1: Tạo khuôn mẫu Sản phẩm (Product)
+Tạo Class Product với các thuộc tính: name, price, discount.
+Viết phương thức getFinalPrice() để trả về giá sau khi đã giảm giá.
+Tạo 2 sản phẩm: iPhone (1000$, giảm 10%) và Samsung (800$, giảm 5%). In giá cuối cùng của chúng ra màn hình.
+Bài 2: Hệ thống quản lý Test Case
+Tạo Class TestCase gồm: id, name, status (mặc định là "Pending").
+Viết phương thức updateStatus(newStatus) để cập nhật trạng thái mới.
+Tạo một mảng chứa 3 Test Case khác nhau và dùng vòng lặp để in thông tin của chúng.
+
+
+
+
+
+
+
+
+6. So sánh về CLASS và OBJECT
+a. Class (Lớp) - Bản thiết kế trên giấy
+Hãy coi Class là một khung mẫu lý thuyết.
+Nó xác định: Một đối tượng nên có những gì (Thuộc tính) và có thể làm được gì (Phương thức).
+Đặc điểm: * Chỉ tồn tại trong code (file .js).
+Không chiếm bộ nhớ khi chương trình chạy (vì nó chưa là "thứ gì đó" cụ thể).
+Bạn không thể ở trong một bản thiết kế nhà, bạn chỉ có thể đọc nó.
+
+b. Object (Đối tượng) - Ngôi nhà ngoài đời thực
+Object là một thực thể cụ thể được tạo ra từ Class.
+Nó mang những giá trị thực sự (ví dụ: Nhà số 1 sơn màu xanh, Nhà số 2 sơn màu đỏ).
+Đặc điểm:
+Được tạo ra bằng từ khóa new.
+Chiếm bộ nhớ của máy tính vì nó đang hoạt động.
+Mỗi Object là độc lập: Bạn sơn lại nhà số 1 thì nhà số 2 không bị ảnh hưởng.
+
+c. Bảng so sánh chi tiết
+Đặc điểm
+Class (Cái khuôn)
+Object (Cái bánh)
+Bản chất
+Là một kiểu dữ liệu do bạn định nghĩa.
+Là một thực thể (instance) cụ thể.
+Sự tồn tại
+Chỉ là khai báo logic trong mã nguồn.
+Là dữ liệu thực sự nằm trong RAM.
+Số lượng
+Thường chỉ có 1 Class duy nhất cho 1 loại đối tượng.
+Có thể tạo ra vô số Object từ 1 Class.
+Khả năng sử dụng
+Không thể gọi trực tiếp các thuộc tính (trừ static).
+Có thể truy cập, thay đổi dữ liệu và chạy hàm.
+
+
+
+// 1. ĐỊNH NGHĨA CLASS (CÁI KHUÔN)
+class KhuonBanh {
+
+    constructor(type, taste) {
+        this.type = type; // Thuộc tính
+        this.taste = taste;
+    }
+
+    lamBanh() {
+        console.log(`${this.type} đang được làm ra...`);
+    }
+}
+
+// 2. TẠO OBJECT (CÁI BÁNH)
+const banhPlan = new KhuonBanh("Bánh Plan", "Ngọt và thơm");    
+const banhKem = new KhuonBanh("Bánh Kem", "Ngọt và béo");   
+
+// 3. SỬ DỤNG
+banhPlan.lamBanh(); // Bánh Plan đang được làm ra...
+console.log(banhKem.taste); // Ngọt và béo
+
+
+VD: Trong Automation,
+Class: Là LoginPage (định nghĩa trang Login có ô Username, Password và nút Login).
+Object: Là loginPageForAdmin (đối tượng cụ thể dùng để chạy Test cho Admin) hoặc loginPageForCustomer (đối tượng dùng cho khách hàng).
+Cả hai đều dùng chung "khuôn" LoginPage nhưng dữ liệu truyền vào (username/pass) là khác nhau.
+
+Example about static 
+class Cat {
+    static species = "Mammal"; // Thuộc tính tĩnh (Static)
+
+    constructor(name) {
+        this.name = name;
+    }
+}
+
+// ✅ Gọi trực tiếp từ Class (Vì nó là static)
+console.log(Cat.species); // Kết quả: "Mammal"
+
+// ❌ Object lại không gọi được static theo cách thông thường
+const myCat = new Cat("Mận Mận");
+console.log(myCat.species); // Kết quả: undefined
+
+
+
+

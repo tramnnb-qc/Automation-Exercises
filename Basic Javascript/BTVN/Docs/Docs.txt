@@ -1,0 +1,61 @@
+Tuần 2 (28/3)
+Bài 1: Kiểm tra kết quả Test Khai báo biến actualResult = "Login Success" và expectedResult = "Login Success". Hãy dùng if...else để in ra "PASSED" nếu hai biến bằng nhau, ngược lại in ra "FAILED".
+Bài 2: Phân loại mức độ lỗi (Bug Severity) Cho một biến bugPriority có giá trị từ 1 đến 3.
+Nếu là 1: In ra "Blocker - Sửa ngay!".
+Nếu là 2: In ra "High - Cần sửa trong sprint".
+Nếu là 3: In ra "Low - Sửa sau". (Gợi ý: Dùng if...else if...else hoặc switch...case).
+Bài 3: Kiểm tra điều kiện Coupon Một mã giảm giá chỉ áp dụng nếu: totalBill > 500 VÀ isMember === true. Hãy viết code để kiểm tra xem khách hàng có được giảm giá không.
+
+Bài 4: Câu hỏi tình huống: Bạn lấy được số lượng sản phẩm từ Website là chuỗi "5". Bạn muốn kiểm tra xem nó có lớn hơn 0 hay không. Bạn nên dùng cách nào an toàn nhất? (Gợi ý: Ép kiểu về Number trước khi so sánh === hay cứ dùng > 0?)
+
+Tạo repo riêng -> đặt tên, làm bài tập và đẩy lên -> gửi link riêng 
+
+
+
+
+
+
+
+
+
+EXTRA Exercises
+
+Bài 1: Hệ thống Phân loại Bug & Tự động Gán (Auto-Assignment)
+Yêu cầu: Viết một chương trình nhận vào 3 thông số của một Bug: severity (Critical, High, Medium, Low), isReproducible (true/false), và affectedModule (UI, API, Database). Logic khó:
+Nếu Bug là Critical VÀ isReproducible là true: In ra "Priority: P0 - Assign to Tech Lead".
+Nếu Bug là Critical nhưng KHÔNG isReproducible: Hạ xuống "Priority: P1 - Assign to Senior QA".
+Nếu Bug ở module Database: Bất kể severity nào (trừ Critical), đều in ra "Assign to DBA Team".
+Các trường hợp còn lại: In ra "Priority: P2 - Assign to Developer".
+Điều kiện bắt buộc: Sử dụng Switch Case kết hợp If/Else. Không được viết quá 3 tầng If lồng nhau.
+Bài 2: Trình kiểm tra Độ mạnh Mật khẩu (Password Validator)
+Yêu cầu: Viết một hàm validatePassword(password) kiểm tra các điều kiện sau:
+Độ dài phải từ 8 đến 20 ký tự.
+Phải chứa ít nhất một ký tự viết hoa.
+Phải chứa ít nhất một con số.
+Cực khó: Không được chứa khoảng trắng. 
+Output: Trả về một chuỗi thông báo cụ thể lỗi đầu tiên nó gặp phải (Ví dụ: "Thiếu chữ hoa", "Quá ngắn"...). Nếu thỏa mãn hết thì trả về "Password Secure".
+Gợi ý: Học viên cần kết hợp toán tử logic &&, || và các hàm xử lý chuỗi cơ bản.
+Bài 3: Tính toán Phí vận chuyển Đa quốc gia (Shipping Logic)
+Yêu cầu: Tính phí ship dựa trên weight (kg), distance (km), và membership (Gold, Silver, Guest). Logic:
+Phí cơ bản: 5$.
+Nếu weight > 10kg: +10$. Nếu weight > 50kg: +50$.
+Nếu distance > 500km: Phí tổng tăng thêm 20%.
+Ưu đãi thành viên: * Gold: Giảm 50% tổng phí.
+Silver: Giảm 20% tổng phí.
+Guest: Không giảm.
+Bài toán khó: Nếu tổng phí sau khi tính toán > 100$, hãy áp dụng thêm mã giảm giá cố định 10$ (sau khi đã tính giảm giá thành viên).
+Bài 4: Hệ thống Điều phối Test Execution (Smart Runner)
+Yêu cầu: Giả lập một hệ thống quyết định xem có chạy Test hay không. Đầu vào: isServerUp (boolean), isDatabaseConnected (boolean), lastTestStatus (Passed/Failed), isWeekend (boolean). Quy tắc:
+Chỉ chạy Test nếu isServerUp và isDatabaseConnected đều là true.
+Nếu là isWeekend:
+Chỉ chạy các test có lastTestStatus là "Failed" (để sửa lỗi).
+Nếu lastTestStatus là "Passed", in ra "Chỉ chạy vào ngày thường".
+Nếu không phải cuối tuần: Chạy tất cả.
+Thử thách Clean Code: Viết logic sao cho không sử dụng quá 2 từ khóa else. (Sử dụng kỹ thuật Return Early hoặc Guard Clauses).
+Bài 5: Xây dựng Bộ lọc Tìm kiếm nâng cao (The Ultimate Filter)
+Yêu cầu: Cho một đối tượng sản phẩm const product = { name: "iPhone", price: 1200, color: "Black", inStock: true }; và một đối tượng bộ lọc từ người dùng const filter = { maxPrice: 1500, preferredColor: "Black", requireStock: true };. Logic: Viết một chương trình kiểm tra xem product có thỏa mãn tất cả các điều kiện trong filter hay không.
+Nếu thỏa mãn: In ra "Product Matches!".
+Nếu không thỏa mãn: Phải in ra tất cả những lý do khiến nó không khớp (Ví dụ: "Giá quá cao", "Sai màu"...).
+Đặc biệt: Nếu filter.maxPrice không có giá trị (undefined), hãy bỏ qua việc kiểm tra giá.
+
+

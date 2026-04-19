@@ -34,3 +34,11 @@ const stagingConfig = {
 
 const finalConfig = { ...defaultConfig, ...stagingConfig };
 console.log(finalConfig);
+
+const keysConfig = Object.keys(finalConfig);
+console.log(keysConfig);
+
+// const a = { ...null };
+// const b = [...null];
+// console.log(a);
+// console.log(b);

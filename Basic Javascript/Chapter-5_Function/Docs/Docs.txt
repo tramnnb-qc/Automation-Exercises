@@ -1,0 +1,170 @@
+Khi viết code, chúng ta không muốn viết lại đoạn code "Đăng nhập" hay "Click vào Menu" ở 100 file khác nhau. Hàm chính là công cụ để chúng ta đóng gói các hành động đó lại và dùng đi dùng lại chỉ với 1 dòng lệnh.
+
+Chapter 5: HÀM (FUNCTIONS) - ĐÓNG GÓI SỨC MẠNH TÁI SỬ DỤNG
+Mục tiêu: Biết cách tạo ra các "công cụ" dùng chung để tối ưu hóa code Automation.
+
+I. Hàm là gì? (Ẩn dụ thực tế)
+Hãy tưởng tượng Hàm giống như một Chiếc máy pha cà phê:
+Input (Đầu vào): Hạt cà phê, nước, đường.
+Xử lý: Xay, đun sôi, pha trộn (đây là thân hàm).
+Output (Đầu ra): Ly cà phê thơm ngon (đây là giá trị trả về - return).
+Trong Testing, Input có thể là username/password, và Output là true (đăng nhập thành công) hoặc false (thất bại).
+
+II. Cách khai báo và Sử dụng hàm
+1. Khai báo hàm (Function Declaration)
+
+function sayHello(name) {
+    console.log(`Xin chào, ${name}. Chúc bạn một ngày test không có Bug!`);
+}
+
+// Cách gọi hàm:
+sayHello("An"); 
+sayHello("Bình");
+
+
+2. Hàm có giá trị trả về (return)
+Từ khóa return cực kỳ quan trọng. Nó giúp hàm trả kết quả về cho người gọi để tiếp tục xử lý.
+function calculateTotal(price, quantity) {
+    return price * quantity;
+}
+
+let total = calculateTotal(100, 3); // total sẽ nhận giá trị 300
+
+
+
+III. Arrow Function (Hàm mũi tên) - Chuẩn hiện đại ES6
+Các framework Automation như Playwright hay Cypress dùng loại này rất nhiều vì nó ngắn gọn.
+Cú pháp:
+const sum = (a, b) => a + b;
+
+const clickElement = (selector) => {
+    console.log(`Đang click vào phần tử: ${selector}`);
+};
+
+
+
+IV. Ứng dụng của Hàm trong Automation Testing
+1. Tạo các hàm tiện ích (Common Utilities)
+Thay vì mỗi lần cần số ngẫu nhiên lại viết code phức tạp, hãy tạo một hàm:
+const getRandomNumber = (max) => Math.floor(Math.random() * max);
+
+console.log(getRandomNumber(1000)); // Tạo ID ngẫu nhiên cho Test Case
+
+
+2. Page Object Model (POM) cơ bản:
+Hàm giúp chúng ta gom các hành động trên một trang lại:
+
+function login(user, pass) {
+    console.log(`Nhập username: ${user}`);
+    console.log(`Nhập password: ${pass}`);
+    console.log("Click nút Login");
+    // Giả sử luôn thành công
+    return true; 
+}
+
+if (login("admin", "123456")) {
+    console.log("Chuyển hướng sang Dashboard...");
+}
+
+
+
+V. Phạm vi của biến (Scope) - Lưu ý quan trọng
+Global Scope: Biến khai báo ngoài hàm, ở đâu cũng dùng được.
+Local Scope: Biến khai báo bên trong hàm, chỉ hàm đó thấy.
+Lời khuyên: Hạn chế dùng biến Global để tránh việc các Test Case "đá" nhau dữ liệu.
+
+VI. Bài tập thực hành (Từ dễ đến khó)
+Bài 1: Hàm kiểm tra độ dài mật khẩu Viết một hàm isPasswordValid(password) nhận vào một chuỗi.
+Nếu độ dài chuỗi >= 8: trả về true.
+Ngược lại: trả về false.
+Bài 2: Hàm định dạng tiền tệ Viết một hàm formatPrice(amount) nhận vào một số (ví dụ: 500000) và trả về chuỗi có thêm ký tự $ đằng sau (ví dụ: "500000$").
+Bài 3: Hàm lọc danh sách Bug (Kết hợp Loop + Array + Function) Cho một mảng các đối tượng bug:
+const myBugs = [
+    { id: 1, severity: "High" },
+    { id: 2, severity: "Low" },
+    { id: 3, severity: "High" }
+];
+
+
+Viết hàm getHighSeverityBugs(list) để trả về một mảng mới chỉ chứa các bug có severity là "High".
+
+
+
+🔥Các quy tắc cần thiết
+
+1. Đặt tên có tâm (Meaningful Names)
+Đừng đặt tên để máy hiểu, hãy đặt tên để "người yêu cũ" đọc cũng hiểu bạn đang viết gì.
+Danh từ cho Biến/Object: userData, loginButton, apiResponse.
+Động từ cho Hàm: clickLogin(), getErrorMessage(), isValidEmail().
+Tránh tên vô nghĩa: Thay vì let d = 30;, hãy dùng let daysToExpiration = 30;.
+Tránh từ viết tắt lạ: Thay vì const authBtn = ..., hãy dùng const authenticateButton = ....
+
+2. Quy tắc hàm "Một việc duy nhất" (Single Responsibility)
+Một hàm chỉ nên làm đúng một nhiệm vụ và làm tốt nhiệm vụ đó.
+Sai: Một hàm vừa đăng nhập, vừa lấy dữ liệu, vừa tạo báo cáo.
+Đúng: Chia thành 3 hàm: login(), fetchData(), generateReport().
+Độ dài: Nếu một hàm dài quá 20-30 dòng, đó là dấu hiệu bạn nên tách nhỏ nó ra.
+
+3. Đừng lặp lại chính mình (DRY - Don't Repeat Yourself)
+Nếu bạn thấy mình đang Copy-Paste code từ file này sang file khác, bạn đang vi phạm quy tắc DRY.
+Giải pháp: Đưa đoạn code lặp lại đó vào một Hàm (Function) hoặc một Module dùng chung (Utilities).
+Lợi ích: Khi logic thay đổi (ví dụ: đổi ID của nút Login), bạn chỉ cần sửa ở đúng 1 nơi thay vì đi tìm ở 10 file khác nhau.
+
+4. Hạn chế dùng "Số ma thuật" (Magic Numbers/Strings)
+Đừng để những con số hay chuỗi ký tự "lơ lửng" trong code mà không ai hiểu ý nghĩa của nó.
+Xấu: 
+
+
+waitForElement(5000); (5000 là gì? Tại sao lại là 5000?)
+
+Sạch: 
+
+
+
+const DEFAULT_TIMEOUT_MS = 5000; 
+waitForElement(DEFAULT_TIMEOUT_MS);
+
+
+
+
+
+5. Trình bày code nhất quán (Formatting & Linting)
+Code sạch phải đẹp và gọn gàng về mặt thị giác.
+Thụt lề (Indentation): Luôn dùng 2 hoặc 4 spaces đồng nhất.
+Dấu ngoặc: Thống nhất cách đặt dấu {.
+Công cụ hỗ trợ: Hãy cài đặt Prettier và ESLint trong VS Code để máy tự "dọn dẹp" giúp bạn mỗi khi lưu file.
+
+6. Comment: "Giải thích Tại sao, đừng giải thích Cái gì"
+Code tốt là code tự giải thích được chính nó (Self-documenting code).
+Xấu: // Cộng a và b (Người đọc nhìn code a + b là biết rồi).
+Sạch: // Phải cộng thêm phí vận chuyển vì khách hàng ở khu vực ngoại thành.
+Quy tắc: Nếu bạn phải viết comment để giải thích đoạn code đó đang làm gì, hãy xem xét việc đặt lại tên biến hoặc cấu trúc lại hàm cho rõ ràng hơn.
+
+💡 Ví dụ so sánh (Refactoring)
+Code "Rác":
+function check(u, p) {
+  if (u.length > 5 && p.length > 8) {
+    // login
+    console.log("ok");
+  } else {
+    console.log("fail");
+  }
+}
+
+
+Code "Sạch":
+const MIN_USERNAME_LENGTH = 5;
+const MIN_PASSWORD_LENGTH = 8;
+
+function validateUserCredentials(username, password) {
+    const isUsernameValid = username.length > MIN_USERNAME_LENGTH;
+    const isPasswordValid = password.length > MIN_PASSWORD_LENGTH;
+
+    if (isUsernameValid && isPasswordValid) {
+        return true;
+    }
+    return false;
+}
+
+
+

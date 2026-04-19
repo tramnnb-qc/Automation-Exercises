@@ -1,0 +1,83 @@
+🚀 MINI PROJECT: SMART E-COMMERCE CHECKOUT SYSTEM
+📝 Ngữ cảnh (Context)
+Bạn cần xây dựng một hệ thống giả lập việc quản lý giỏ hàng và thanh toán cho một trang thương mại điện tử. Hệ thống này phải xử lý được các mặt hàng khác nhau, tính toán chiết khấu và mô phỏng việc gọi API thanh toán một cách bất đồng bộ.
+
+🛠 Yêu cầu kỹ thuật (Requirements)
+1. Xây dựng cấu trúc Class (OOP)
+Class Product (Base Class):
+Thuộc tính: name, price.
+Phương thức: getDetails() (In ra tên và giá).
+Class Electronics (Kế thừa Product):
+Thuộc tính riêng: warranty (số tháng bảo hành).
+Đa hình: Ghi đè hàm getDetails() để in thêm thông tin bảo hành.
+Class Clothing (Kế thừa Product):
+Thuộc tính riêng: size.
+Đa hình: Ghi đè hàm getDetails() để in thêm kích cỡ.
+2. Xây dựng hệ thống Giỏ hàng (Encapsulation)
+Class ShoppingCart:
+Thuộc tính #items (Mảng Private - không cho phép sửa trực tiếp từ ngoài).
+Phương thức addItem(product): Thêm sản phẩm vào mảng.
+Phương thức showCart(): In ra danh sách sản phẩm hiện có.
+Phương thức calculateTotal(): Tính tổng tiền.
+3. Xử lý Thanh toán (Asynchronous)
+Tạo một hàm processPayment(totalAmount) trả về một Promise.
+Nếu totalAmount > 0: Resolve sau 2 giây với thông báo "Thanh toán thành công".
+Nếu totalAmount <= 0: Reject với thông báo "Giỏ hàng trống, không thể thanh toán".
+
+💻 Mã nguồn gợi ý (Skeletal Code)
+class Product {
+    constructor(name, price) {
+        this.name = name;
+        this.price = price;
+    }
+    getDetails() {
+        return `${this.name} - $${this.price}`;
+    }
+}
+
+// TODO: Tạo class Electronics kế thừa Product
+// TODO: Tạo class Clothing kế thừa Product
+
+class ShoppingCart {
+    #items = []; // Private field
+
+    addItem(product) {
+        this.#items.push(product);
+        console.log(`Đã thêm ${product.name} vào giỏ.`);
+    }
+
+    // TODO: Viết hàm showCart()
+    // TODO: Viết hàm calculateTotal()
+}
+
+// TODO: Viết hàm giả lập API thanh toán async processPayment()
+
+// --- KỊCH BẢN CHẠY THỬ (TEST SCRIPT) ---
+async function runDemo() {
+    try {
+        const cart = new ShoppingCart();
+        
+        // 1. Tạo sản phẩm
+        // const laptop = new Electronics("Macbook", 2000, 12);
+        // const shirt = new Clothing("T-Shirt", 20, "L");
+
+        // 2. Thêm vào giỏ
+        // cart.addItem(laptop);
+        // cart.addItem(shirt);
+
+        // 3. Tính tiền và thanh toán
+        // const total = cart.calculateTotal();
+        // console.log("Tổng tiền:", total);
+        
+        // await processPayment(total);
+        
+    } catch (error) {
+        console.error("LỖI:", error);
+    } finally {
+        console.log("Hệ thống đóng. Hẹn gặp lại!");
+    }
+}
+
+runDemo();
+
+
